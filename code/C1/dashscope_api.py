@@ -15,6 +15,7 @@ client = OpenAI(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
+# 传入单条消息 
 def get_completion(prompt, model="qwen-plus", temperature=0.0):
     messages = [{"role": "user", "content": prompt}]
     response = client.chat.completions.create(
@@ -23,6 +24,15 @@ def get_completion(prompt, model="qwen-plus", temperature=0.0):
         temperature=temperature, # 模型输出的温度系数，控制输出的随机程度
     )
     return response.choices[0].message.content 
+
+# 传入多条消息 messages
+def get_completion_from_messages(messages, model="qwen-plus", temperature=0.0):
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=temperature, # 控制模型输出的随机程度
+    )
+    return response.choices[0].message.content
 
 # 测试
 if __name__ == "__main__":
