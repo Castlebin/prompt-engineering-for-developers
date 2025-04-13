@@ -15,11 +15,12 @@ client = OpenAI(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
-def get_completion(prompt, model="qwen-plus"):
+def get_completion(prompt, model="qwen-plus", temperature=0.0):
     messages = [{"role": "user", "content": prompt}]
     response = client.chat.completions.create(
         model=model,
         messages=messages,
+        temperature=temperature, # 模型输出的温度系数，控制输出的随机程度
     )
     return response.choices[0].message.content 
 
